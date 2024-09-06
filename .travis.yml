@@ -2,20 +2,19 @@ os: linux
 dist: focal
 language: node_js
 jobs:
- include: 
- - name: "test" # existing functionality
-   script: # existing functionality
-    - npm -v
- - name: "sbom"
-   script: # existing functionality
-    - npm install
-   addons:
-     sbom:
-       on:
-         branch: 'main'
-         pr: true
-       # condition: true
-       run_phase: "after_failure" # 
-       output_format: "spdx-json" # 
-       output_dir: "/test" # 
-       input_dir: "/node" #
+  include: 
+    - name: "test" # existing functionality
+      script: 
+        - npm -v  # Ensure npm is installed
+    - name: "sbom"
+      script: 
+        - npm install  # Ensure dependencies are installed
+      addons:
+        sbom:
+          on:
+            branch: 'main'
+            pr: true
+          run_phase: "after_failure"  # When to run the SBOM generation
+          output_format: "spdx-json"  # Output format
+          output_dir: "./sbom-output"  # Corrected output directory path
+          input_dir: "./"  # Corrected input directory path
